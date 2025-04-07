@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>隨機roll生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .players-section, .results-section {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>隨機roll生成器</h2>
+
+        <div class="players-section" id="playerCounts">
+            <label for="playerCount" >選擇參加人數（1~4人）：</label>
+            <select id="playerCount" onchange="updatePlayers()">
+                <option value="1">1人</option>
+                <option value="2">2人</option>
+                <option value="3">3人</option>
+                <option value="4">4人</option>
+            </select>
+        </div>
+
+        <form id="selectionForm" onsubmit="return handleSubmit(event)">
+            <!-- 表單欄位會動態生成 -->
+            <div id="playerInputs"></div>
+            <button type="submit">生成隊伍</button>
+        </form>
+
+        <div class="results-section">
+            <h3>Roll結果：</h3>
+            <table id="resultsTable">
+                <!-- 結果會動態添加到此表格中 -->
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 武器列表
+        const weapons = ["大劍", "雙刀", "片手劍", "太刀", "大槌", "長槍", "銃槍", "斬擊斧", "充能斧", "狩獵笛", "操蟲棍", "輕弩", "重弩", "弓"];
+
+        // 魔物列表
+        const monsters = ['纏蛙', '炎尾龍', '刺花蜘蛛', '桃毛獸王', '沙海龍', '闢兽', '波衣龍', '沼噴龍', '煌雷龍', '影蜘蛛', '風鋏龍', '赫猿獸', '獄焰鱆', '護闢獸', '護火龍', '凍峰龍', '兇爪龍', '暗器鱆', '護鎖刃龍', '白熾龍', '怪鳥', '刺花蜘蛛', '狩猎犬'];
+
+        // 人數選擇改變時更新表單
+        function updatePlayers() {
+            const playerCount = parseInt(document.getElementById('playerCount').value);
+            const inputsContainer = document.getElementById('playerInputs');
+            inputsContainer.innerHTML = '';
+
+            for (let i = 1; i <= playerCount; i++) {
+                const input = document.createElement('div');
+                input.id = `player${i}`
+                const player = document.createTextNode(`玩家 ${i}`);
+                input.appendChild(player)
+                inputsContainer.appendChild(input);
+            }
+        }
+
+        // 表單提交處理
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const playerCount = parseInt(document.getElementById('playerCount').value);
+            const players = [];
+
+            for (let i = 1; i <= playerCount; i++) {
+                const playerName = document.getElementById(`player${i}`).value;
+
+                players.push(playerName);
+            }
+
+            // 生成結果
+            const results = generateResults(players);
+
+            // 顯示結果
+            displayResults(results);
+
+            // 隱藏表單
+            document.getElementById('selectionForm').style.display = 'none';
+            document.getElementById("playerCounts").hidden = true;
+
+            return false;
+        }
+
+        // 生成隨機武器和魔物
+        function generateResults(players) {
+            const results = [];
+
+            players.forEach((player, index) => {
+                const weaponIndex = Math.floor(Math.random() * weapons.length);
+                const monsterIndex = Math.floor(Math.random() * monsters.length);
+
+                results.push({
+                    player: `玩家 ${index + 1}`,
+                    weapon: weapons[weaponIndex],
+                });
+            });
+
+            // 加上魔物
+            const monsterResult = {
+                monster: monsters[Math.floor(Math.random() * monsters.length)]
+            };
+
+            return [...results, monsterResult];
+        }
+
+        function reappear(event) {
+            document.getElementById('selectionForm').style.display = 'block';
+            document.getElementById("playerCounts").hidden = false;
+            document.getElementById('resultsTable').innerHTML = '';
+        }
+
+        // 顯示結果到表格中
+        function displayResults(results) {
+            const tableBody = document.getElementById('resultsTable');
+            tableBody.innerHTML = '';
+
+            results.forEach(item => {
+                if ('monster' in item) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td colspan="2">狩獵目標: ${item.monster}</td>
+                    `;
+                    tableBody.appendChild(row);
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.player}</td>
+                        <td>武器：${item.weapon}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+            const regen = document.createElement('tr');
+            regen.innerHTML = "<input type='button' value='重新生成' onclick='reappear()'></input>";
+            tableBody.appendChild(regen)
+        }
+
+        // 初始載入時更新表單
+        updatePlayers();
+    </script>
+</body>
+</html>
