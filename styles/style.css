@@ -27,21 +27,30 @@ h2 {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .players-section, .results-section {
-
     margin-bottom: 20px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
-
 th, td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #7c7c7c;
 }
-
+@media screen and (width<400px){
+    th, td {
+        font-size: 0.8em;
+    }
+    .humans {
+        width: 30%;
+    }
+    .weapons {
+        width: 70%;
+    }
+}
 .human {
     vertical-align: middle;
     aspect-ratio: 1/1;

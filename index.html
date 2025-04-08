@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>隨機roll生成器</title>
     <link href="styles/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="styles/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -123,14 +124,15 @@
                 if ('monster' in item) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td colspan="2">狩獵目標: ${item.monster}</td>
+                        <td>狩獵目標: </td>
+                        <td>${item.monster}</td>
                     `;
                     tableBody.appendChild(row);
                 } else {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${item.player}</td>
-                        <td>武器：${item.weapon}</td>
+                        <td class='humans'>${item.player}</td>
+                        <td class='weapons'>武器：${item.weapon}<img src="styles/pics/weapons/${item.weapon}.webp"/></td>
                     `;
                     tableBody.appendChild(row);
                 }
