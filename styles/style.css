@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(255, 255, 255, 0.6);
+    background-blend-mode: multiply;
+    background-image: url('pics/background.webp');
+    background-size: cover;
+    margin: 0 auto;
+    padding: 20px;
+}
+h2 {
+    font-size: 2em;
+    text-align: center;
+}
+@media screen and (width<400px){
+    h2 {
+        font-size: 1.6em;
+        text-align: center;
+    }
+}
+.container {
+    margin: auto;
+    max-width: 600px;
+    font-size: 1.5em;
+    background-color: #fcf598;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.players-section, .results-section {
+
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #7c7c7c;
+}
+
+.human {
+    vertical-align: middle;
+    aspect-ratio: 1/1;
+}
+#player1 {
+    vertical-align: middle;
+}
+#player2 {
+    vertical-align: middle;
+}
+#player3 {
+    vertical-align: middle;
+}
+#player4 {
+    vertical-align: middle;
+}

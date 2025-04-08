@@ -3,39 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>隨機roll生成器</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .container {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .players-section, .results-section {
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
+    <link href="styles/style.css" rel="stylesheet" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <div class="container">
         <h2>隨機roll生成器</h2>
 
         <div class="players-section" id="playerCounts">
-            <label for="playerCount" >選擇參加人數（1~4人）：</label>
+            <label for="playerCount" >選擇參加人數（1~4人）：</label></br>
             <select id="playerCount" onchange="updatePlayers()">
                 <option value="1">1人</option>
                 <option value="2">2人</option>
@@ -76,6 +52,10 @@
                 input.id = `player${i}`
                 const player = document.createTextNode(`玩家 ${i}`);
                 input.appendChild(player)
+                var img = document.createElement('img')
+                img.setAttribute("src", 'styles/pics/head_armor_icons.webp');
+                img.className = 'human'
+                input.appendChild(img);
                 inputsContainer.appendChild(input);
             }
         }
@@ -89,7 +69,6 @@
 
             for (let i = 1; i <= playerCount; i++) {
                 const playerName = document.getElementById(`player${i}`).value;
-
                 players.push(playerName);
             }
 
@@ -158,8 +137,8 @@
             });
             const regen = document.createElement('tr');
             regen.innerHTML = `
-                    <td colspan='2'><input type='button' value='新的任務' onclick='handleSubmit(event)'></input></td>
-                    <td colspan='2'><input type='button' value='重選人數' onclick='reappear()'></input></td>
+                    <td><input type='button' value='新的任務' onclick='handleSubmit(event)'></input></td>
+                    <td><input type='button' value='重選人數' onclick='reappear()'></input></td>
                     `;
 
             tableBody.appendChild(regen)
